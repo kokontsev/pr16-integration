@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16
+    ports: ["127.0.0.1:15446:5432"]
+    environment:
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: student
+      POSTGRES_DB: notes
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U student -d notes"]
+      interval: 2s
+      timeout: 2s
+      retries: 30

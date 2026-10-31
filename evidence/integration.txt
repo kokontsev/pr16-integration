@@ -1,0 +1,28 @@
+=== RUN   TestCRUD
+    notes_test.go:80: POST /api/v1/notes -> 201 {"id":1,"title":"Hello","content":"World","createdAt":"2026-10-31T11:45:16.237352+03:00","updatedAt":"2026-10-31T11:45:16.237352+03:00"}
+    notes_test.go:89: GET /api/v1/notes/1 -> 200 {"id":1,"title":"Hello","content":"World","createdAt":"2026-10-31T11:45:16.237352+03:00","updatedAt":"2026-10-31T11:45:16.237352+03:00"}
+    notes_test.go:90: PATCH /api/v1/notes/1 -> 200 {"id":1,"title":"Hello","content":"Updated","createdAt":"2026-10-31T11:45:16.237352+03:00","updatedAt":"2026-10-31T11:45:16.244556+03:00"}
+    notes_test.go:95: DELETE /api/v1/notes/1 -> 204 
+    notes_test.go:96: GET /api/v1/notes/1 -> 404 {"error":"not_found"}
+--- PASS: TestCRUD (0.07s)
+=== RUN   TestValidationAndNotFound
+    notes_test.go:105: POST /api/v1/notes -> 400 {"error":"invalid_input"}
+    notes_test.go:105: POST /api/v1/notes -> 400 {"error":"invalid_input"}
+    notes_test.go:105: POST /api/v1/notes -> 400 {"error":"invalid_input"}
+    notes_test.go:105: POST /api/v1/notes -> 400 {"error":"invalid_input"}
+    notes_test.go:107: GET /api/v1/notes/999999 -> 404 {"error":"not_found"}
+    notes_test.go:108: GET /api/v1/notes/abc -> 400 {"error":"invalid_input"}
+    notes_test.go:109: PATCH /api/v1/notes/999999 -> 404 {"error":"not_found"}
+    notes_test.go:110: DELETE /api/v1/notes/999999 -> 404 {"error":"not_found"}
+    notes_test.go:111: GET /api/v1/notes?limit=-1 -> 400 {"error":"invalid_input"}
+--- PASS: TestValidationAndNotFound (0.03s)
+=== RUN   TestListFilterPagination
+    notes_test.go:116: POST /api/v1/notes -> 201 {"id":1,"title":"Go one","content":"","createdAt":"2026-10-31T11:45:16.310917+03:00","updatedAt":"2026-10-31T11:45:16.310917+03:00"}
+    notes_test.go:116: POST /api/v1/notes -> 201 {"id":2,"title":"Other","content":"","createdAt":"2026-10-31T11:45:16.312426+03:00","updatedAt":"2026-10-31T11:45:16.312426+03:00"}
+    notes_test.go:116: POST /api/v1/notes -> 201 {"id":3,"title":"Go two","content":"","createdAt":"2026-10-31T11:45:16.313565+03:00","updatedAt":"2026-10-31T11:45:16.313565+03:00"}
+    notes_test.go:119: GET /api/v1/notes?q=Go&limit=1&page=1 -> 200 [{"id":3,"title":"Go two","content":"","createdAt":"2026-10-31T11:45:16.313565+03:00","updatedAt":"2026-10-31T11:45:16.313565+03:00"}]
+    notes_test.go:119: GET /api/v1/notes?q=Go&limit=1&page=2 -> 200 [{"id":1,"title":"Go one","content":"","createdAt":"2026-10-31T11:45:16.310917+03:00","updatedAt":"2026-10-31T11:45:16.310917+03:00"}]
+    notes_test.go:132: GET /api/v1/notes?q=missing -> 200 []
+--- PASS: TestListFilterPagination (0.03s)
+PASS
+ok  	example.com/pr16/integration	1.762s

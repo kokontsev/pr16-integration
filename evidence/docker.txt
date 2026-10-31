@@ -1,0 +1,2 @@
+NAME           IMAGE         COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+go-pr16-db-1   postgres:16   "docker-entrypoint.s…"   db        4 minutes ago   Up 4 minutes (healthy)   127.0.0.1:15446->5432/tcp
